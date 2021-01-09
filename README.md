@@ -2,6 +2,7 @@
         <li>프로젝트 소개</li>
         <li>팀원 소개</li>
         <li>DB설계(UML)</li>
+        <li>일정 관리</li>
         <li>주요 기능 소개</li>
 </ul>
 
@@ -19,6 +20,10 @@
 <img src="https://user-images.githubusercontent.com/74252292/104094476-70909500-52d4-11eb-962b-bd2adf3f227b.png">
 <img src="https://user-images.githubusercontent.com/74252292/104094474-6f5f6800-52d4-11eb-90ff-28f0b4fa3594.png">
 <img src="https://user-images.githubusercontent.com/74252292/104094472-6cfd0e00-52d4-11eb-9ae0-db1455170807.png">
+
+<hr>
+<h3>일정 관리</h3>
+<img src="https://user-images.githubusercontent.com/74252292/104094684-bb5edc80-52d5-11eb-8caa-8fe2fdf8438a.png">
 
 <hr>
 <h3>주요 기능 소개</h3>
