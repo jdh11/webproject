@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="user">
+	<insert id="insertUser" parameterType="user">
+		insert into "USER" values(
+				user_seq.nextval,
+				#{category.categoryNo},
+				#{userId},
+				#{userPw},
+				#{userName},
+				#{phone},
+				#{email},
+				#{addr}
+			)
+	</insert>
+	<select id="selectOneUser" parameterType="user" resultType="user">
+		select 
+			user_no,
+			user_id,
+			user_pw,
+			user_name,
+			phone,
+			email,
+			addr
+		from "USER"
+		<trim prefix="where" prefixOverrides="AND">
+			<choose>
+				<when test="userNo != 0">
+					 user_No = #{userNo}
+				</when>
+				<when test="userId != null">
+					 AND user_id = #{userId}
+				</when>
+				<when test="userPw != null">
+					AND user_pw = #{userPw}
+				</when>
+				<when test="userName != null">
+					AND user_name = #{userName}
+				</when>
+				<when test="email != null">
+					AND email = #{email}
+				</when>
+				<otherwise>
+					where 1=0
+				</otherwise>
+			</choose>
+		</trim>
+	</select>
+	<select id="selectUserBySearch" parameterType="map" resultType="user">
+	SELECT *
+	FROM
+	  (
+	    SELECT 
+	        ROWNUM as rnum,
+            user_no,
+			user_id,
+			user_name,
+			phone,
+			email,
+			addr
+	    FROM 
+	           (select
+					*
+				from
+					"USER"
+				where 1=1
+				<choose>
+						<when test="searchKeyword.equals('이름')">
+							AND user_name like '%' || #{inputStr}|| '%'
+						</when>
+						<when test="searchKeyword.equals('아이디')">
+							AND user_id like '%' || #{inputStr} || '%'
+						</when>
+						<otherwise>
+							and user_name like '%' || #{inputStr}|| '%'
+							or user_id like '%' || #{inputStr} || '%'
+						</otherwise>
+					</choose>
+				)
+	    where rownum  <![CDATA[ <= ]]>	 (#{reqPage}-1)*10+10
+	    ORDER BY user_no DESC
+	  )u
+	WHERE u.rnum >= (#{reqPage}-1)*10+1
+	</select>
+	<select id="selectCountBySearch" resultType="_int" parameterType="map">
+	select count(*)
+	from
+					"USER"
+				where 1=1
+				<choose>
+						<when test="searchKeyword.equals('이름')">
+							AND user_name like '%' || #{inputStr}|| '%'
+						</when>
+						<when test="searchKeyword.equals('아이디')">
+							AND user_id like '%' || #{inputStr} || '%'
+						</when>
+						<otherwise>
+							and user_name like '%' || #{inputStr}|| '%'
+							or user_id like '%' || #{inputStr} || '%'
+						</otherwise>
+					</choose>
+	</select>
+	<update id="updateUser" parameterType="user">
+		update "USER"
+		<trim prefix="set" suffixOverrides="," prefixOverrides=",">
+			<if test="userId != null">user_Id = #{userId}</if>
+			<if test="userPw != null">,user_Pw = #{userPw}</if>
+			<if test="userName != null">,user_Name = #{userName}</if>
+			<if test="phone != null">,phone = #{phone}</if>
+			<if test="email != null">,email = #{email}</if>
+			<if test="addr != null">,addr = #{addr},</if>
+		</trim>
+		where user_no = #{userNo}
+	</update>
+	<delete id="deleteUser" parameterType="user">
+		delete from "USER"
+		<trim prefix="where" suffixOverrides="AND">
+			<if test="userNo != null">user_No = #{userNo}</if>
+			<if test="userId != null">AND user_Id = #{userId}</if>
+		</trim>
+	</delete>
+</mapper>

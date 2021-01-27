@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rental">
+	<insert id="insertBookRental" parameterType="java.util.ArrayList">
+			insert into book_rental (
+				book_rental_no,
+				user_no,
+				book_no,
+				rental_location_no,
+				enroll_date,
+				return_date
+			) select book_rental_seq.nextval, A.* from(
+		<foreach collection="list" item="item" separator="UNION ALL">
+				select #{item.userNo} as user_no,	
+	            #{item.bookNo} as book_no,
+	            #{item.rentalLocationNo} as rental_location_no,
+	            to_char(sysdate,'yyyy-mm-dd') as enroll_date,
+	            SYSDATE + (INTERVAL '3' DAY) as return_date
+	            from dual
+	    </foreach>) A
+	</insert>
+	<select id="selectIsRental" parameterType="_int" resultType="rental">
+		select * from book_rental where book_no=#{bookNo} and isreturn='N' order by 1 desc
+	</select>
+	<select id="userRentalList" parameterType="_int" resultType="rental">
+		select * from book_rental where user_no=#{userNo} and isreturn='N'
+	</select>
+	<select id="isBookRentalLimitOver" parameterType="user" resultType="_int">
+		select count(*) from book_rental where user_no = #{userNo} and isReturn = 'N'
+	</select>
+	
+	<!-- @author 진수경 -->
+	<select id="selectRentalList" parameterType="map" resultType="rentalJ">
+		select br.book_rental_no as bookRentalNo,
+			br.user_no as userNo,
+			br.book_no as bookNo,
+			b.book_name as bookName,
+			b.book_writer as bookWriter,
+			rl.placeName,
+			rl.addr,
+			br.enroll_date as enrollDate,
+			br.return_date as returnDate,
+			b.imageurl,
+			br.isReturn
+		from (select rownum as rnum, n.* from(select * from book_rental order by 1 desc)n) br
+		join book b
+		on br.book_no = b.book_no
+		join rental_location rl
+		on br.rental_location_no = rl.rental_location_no
+		where br.user_no=#{userNo} and rnum between #{start} and #{end}
+	</select>
+	<select id="totalCount" resultType="_int" parameterType="_int">
+		select count(*) from book_rental where user_no=#{_int}
+	</select>
+</mapper>

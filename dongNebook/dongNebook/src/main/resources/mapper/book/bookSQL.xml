@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="book">
+	<insert id="insertBook" parameterType="com.dongnebook.book.model.vo.Book">
+		insert into Book values(
+			book_seq.nextval,
+			#{bookName},
+			#{bookKind},
+			#{bookWriter},
+			#{bookPublisher},
+			#{bookIntroduce},
+			#{ISBN},
+			#{bookCount},
+			#{rCount},
+			#{imageurl}
+		)
+	</insert>
+	<select id="selectTotalCount" resultType="_int">
+		select count(*) from book
+	</select>
+	<select id="selectBookList" parameterType="hashMap" resultType="book">
+		select * from 
+		(select rownum as rnum, n.* from(select * from book order by 1 desc)n) 
+		where rnum between #{start} and #{end}
+	</select>
+	<select id="selectSearchCount" resultType="_int" parameterType="map">
+				
+	SELECT count(*)
+	FROM
+	           (select
+					*
+				from
+					book
+				where 1=1
+					<choose>
+						<when test="searchKeyword.equals('책이름')">
+							AND book_name like '%' || #{inputStr} || '%'
+						</when>
+						<when test="searchKeyword.equals('저자')">
+							AND book_writer like '%' || #{inputStr} || '%'
+						</when>
+						<when test="searchKeyword.equals('출판사')">
+							AND book_publisher like '%' || #{inputStr} || '%'
+						</when>
+						<otherwise>
+							and book_name like '%' || #{inputStr} || '%'
+							or book_publisher like '%' || #{inputStr} || '%'
+							or book_writer like '%' || #{inputStr} || '%'
+						</otherwise>
+					</choose>
+				)
+	
+	</select>
+	<select id="selectAllBook" resultType="book">
+		select 
+	     	book_no,
+	        book_name,
+	        book_kind,
+	        book_writer,
+	        book_publisher,
+	        book_introduce,
+	        ISBN,
+	        book_count,
+	        imageurl
+	    from
+	    	book
+	</select>
+	<select id="selectBook" parameterType="book" resultType="book">
+		select 
+			book_no,
+	        book_name,
+	        book_kind,
+	        book_writer,
+	        book_publisher,
+	        book_introduce,
+	        ISBN,
+	        book_count,
+	        imageurl
+		from 
+			book
+		<trim prefix="where" prefixOverrides="AND">
+			<choose>
+				<when test="bookNo != 0">
+					 book_No = #{bookNo}
+				</when>
+				<when test="bookName != null">
+					 AND book_Name = #{bookName}
+				</when>
+				<when test="bookKind != null">
+					 AND book_kind= #{bookKind}
+				</when>
+				<when test="bookPublisher != null">
+					 AND book_publisher = #{bookPublisher}
+				</when>
+				<when test="bookIntroduce != null">
+					 AND book_introduce = #{bookIntroduce}
+				</when>
+			<!-- 	<when test="book_count != 0">
+					 book_count = #{bookCount}
+				</when> -->
+				<when test="imageurl != null">
+					 AND imageurl = #{imageurl}
+				</when>
+				<when test="ISBN != null">
+					AND ISBN = #{ISBN}
+				</when>
+				<otherwise>
+					 1=0
+				</otherwise>
+			</choose>
+		</trim>
+	</select>
+	<delete id="deleteBook" parameterType="_int">
+		delete from book where book_no=#{_parameter}
+	</delete>
+	<select id="selectBookByKeyword" parameterType="map" resultType="book">
+			
+	SELECT *
+	FROM
+	  (
+	    SELECT 
+	        ROWNUM as rnum,
+	        book_no,
+	        book_name,
+	        book_kind,
+	        book_writer,
+	        book_publisher,
+	        book_introduce,
+	        ISBN,
+	        book_count,
+	        imageurl
+	    FROM 
+	           (select
+					*
+				from
+					book
+				where 1=1
+					<choose>
+						<when test="searchKeyword.equals('책이름')">
+							AND book_name like '%' || #{inputStr} || '%'
+						</when>
+						<when test="searchKeyword.equals('저자')">
+							AND book_writer like '%' || #{inputStr} || '%'
+						</when>
+						<when test="searchKeyword.equals('출판사')">
+							AND book_publisher like '%' || #{inputStr} || '%'
+						</when>
+						<otherwise>
+							and book_name like '%' || #{inputStr} || '%'
+							or book_publisher like '%' || #{inputStr} || '%'
+							or book_writer like '%' || #{inputStr} || '%'
+						</otherwise>
+					</choose>
+				)
+	    where rownum <![CDATA[ <= ]]>	 (#{reqPage}-1)*10+10
+	    ORDER BY book_no DESC
+	  )book
+	WHERE book.rnum >= (#{reqPage}-1)*10+1
+	
+		
+	</select>
+	<update id="updateBook" parameterType="book">
+		update book set book_count=#{bookCount} where book_no=#{bookNo}
+	</update>
+	<select id="selectBookMark" parameterType="_int" resultType="string">
+		select isbn from bookmark where user_no=#{userNo}
+	</select>
+	<insert id="insertBookMark" parameterType="bookmark">
+		insert into bookmark values(#{userNo},#{ISBN})
+	</insert>
+	<delete id="deleteBookMark" parameterType="bookmark">
+		delete from bookmark where user_no=#{userNo} and isbn=#{ISBN}
+	</delete>
+	<select id="searchUser" parameterType="user" resultType="user">
+		select user_no as userNo from bookmark
+	</select>
+	<select id="searchBookMark" parameterType="_int" resultType="bookmark">
+		select user_no as userNo,
+		book_No as bookNo,
+		book_name as bookName,
+		book_writer as bookWriter,
+		imageurl,
+		isbn
+		from "USER" 
+		join bookMark using (user_no)
+		join book using (isbn) where user_no = #{userNo}
+	</select>
+	<select id="searchBookList" parameterType="string" resultType="book">
+		select
+			*
+		from book where isbn = #{ISBN}
+	</select>
+	<select id="selectOneBook" parameterType="_int" resultType="book">
+		select
+			*
+		from book where book_no = #{bookNo}
+	</select>	
+	<insert id="insertReserve" parameterType="reserve">
+		insert into book_rental_reserve values(book_rental_reserve_seq.nextval,#{bookNo},#{userNo})
+	</insert>
+	<select id="rentalCount" parameterType="_int" resultType="_int">
+		select count(*) from book_rental where user_no = #{userNo}
+	</select>
+	<select id="selectBooks" parameterType="java.util.ArrayList" resultType="book">
+	    SELECT * FROM book
+	    WHERE book_no IN (
+	        <foreach collection="array" item="bookNo" index="index" separator=",">
+	            #{bookNo}
+	        </foreach>
+	    )
+	</select>
+
+	<select id="newBook" resultType="book">
+		select book_no as bookNo,
+	        book_name as bookName,
+	        book_kind as bookKind,
+	        book_writer as bookWriter,
+	        book_publisher as bookPublisher,
+	        book_introduce as bookIntroduce,
+	        ISBN as ISBN,
+	        book_count as bookCount,
+	        imageurl as imageurl
+        from (select rownum as bnum, b.* from (select * from book order by book_no desc)b) where bnum between 1 and 5
+	</select>
+	<select id="selectOneBookISBN" parameterType="string" resultType="book">
+		select * from book where isbn=#{_parameter}
+	</select>
+	<update id="updateCntBook" parameterType="string">
+		update book SET book_count= book_count + 1 WHERE isbn=#{ISBN}
+	</update>
+	<select id="rentalInfo" parameterType="_int" resultType="bookrental">
+		select * from book_rental where user_no=#{_parameter} and isreturn='N'
+	</select>
+	<select id="rBookList" parameterType="_int" resultType="book">
+		select * from book where book_no=#{_parameter}
+	</select>
+	<update id="updateCount" parameterType="_int">
+		update book SET book_count = book_count - 1 , rcount = rcount + 1 
+		WHERE book_no IN 
+	        <foreach collection="array" item="bookNo" index="index" separator="," open="(" close=")">
+	        	#{bookNo}
+        	</foreach>
+	</update>
+	<delete id="deleteBooks">
+	    update book set book_count =book_count+1, rcount=rcount-1
+	    WHERE
+	    <foreach collection="array" item="item" separator="or" index="index">
+	        book_name=#{item}
+	    </foreach>
+	</delete>
+	
+	<!-- @author 진수경 
+	<update id="returnBooks" parameterType="java.util.List">
+		update book_rental set isReturn='Y' where 
+		<foreach collection="array" item="item" separator="or" index="index">
+	        book_name=#{item}
+	    </foreach>
+	</update>-->
+	<select id="selectBookNo" resultType="_int">
+		select book_no from book
+		where
+		<foreach collection="array" item="item" separator="or" index="index">
+			book_name=#{item}
+		</foreach>
+	</select>
+	<update id="updateIsRental" parameterType="hashmap">
+		update book_rental set isreturn='Y'
+		where
+		user_no=#{userNo} and book_no in
+		<foreach index="key" item="value" collection="bookNo" separator="," open="(" close=")">
+			#{value}
+		</foreach>
+	</update>
+</mapper>
