@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    <style>
+        header{
+            margin: 0 auto;
+            width: 1200px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        header div{
+            float: left;
+        }
+        header>div a{
+            text-decoration: none;
+            color: black;
+            display: inline-block;
+        }
+        header>div{
+            height: 70px;
+        }
+        header>div:first-child{
+            width: 20%;
+            text-align: center;
+            line-height: 100px;
+        }
+        .logo>a{
+             
+        }
+        .logo>a>img{
+            width: 210px;
+        }
+        .content{
+            margin: 0 auto;
+            width: 1200px;
+            box-sizing: border-box;
+            
+        }
+        .menu{
+            overflow: hidden;
+            width: 60%;
+            
+        }
+        .menu>ul>li{
+            float: left;
+            height: 50px;
+            width: calc(100%/5);
+            list-style-type: none;
+            text-align: center;
+            
+            
+        }
+        .menu>ul>li>a{
+            font-size: 20px;
+            color: black;
+            display: block;
+            height: 40px;
+        }
+        
+        .menu>ul:hover ul,.sub:hover{
+            display: block;
+            
+        }
+        header>div:last-child{
+            width: 20%;
+            text-align: right;
+        }
+        header>div:last-child>a{
+            font-size: 17px;
+            width: 80px;
+        }
+        .mainImg{
+            width: 100%;
+            z-index: 0;
+        }
+        .imgMain{
+            position: relative;
+            
+        }
+        .imgMain>div:nth-child(2){
+            position: absolute;
+            width: 60%;
+            top: 60%;
+	        left: 33%;
+            overflow: hidden;
+        }
+        .imgMain>div:nth-child(2)>input:first-child{
+            float: left;
+            width: 50%;
+            height: 40px;
+            outline: none;
+            background-color: rgb(255, 255, 255);
+            border: none;
+            font-size: 20px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+        .imgMain>div:nth-child(2)>input:last-child{
+            height: 42px;
+            width: 45px;
+            vertical-align:top;
+            background-color: rgb(255, 255, 255);
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        [name=Submit]{
+            outline: none;
+        }
+        content{
+            
+            width: 100%;
+        }
+        .content2{
+            display: flex;
+            justify-content: center;
+        }
+        .content2>div{
+            margin: 10px;
+            width: 45%;
+            height: 500px;
+            border: 1px solid black;
+            
+        }
+        .book{
+            width: 93%;
+            margin: 0 auto;
+            border: 1px solid gray;
+            height: 250px;
+            
+        }
+        .book a{
+            text-decoration: none;
+            
+        }
+        .navi{
+            padding: 0;
+            overflow: hidden;
+            margin: 0;
+        }
+        
+        .navi>li{
+        cursor: pointer;
+        }
+        .tab{
+            float: left;
+            width: 120px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            font-size: 20px;
+            box-sizing: border-box;
+        }
+        .book li{
+            list-style-type: none;
+        }
+        .contents{
+         width: 100%;
+        }
+        .bookContent>ul{
+            width: 100%;
+            padding: 0;
+            justify-content: center;
+            display: flex;
+        }
+        .bookContent>ul>li{
+            width: 150px;
+            height: 150px;
+            border: 1px solid black;
+            margin-top: 20px;
+            margin-right: 30px;
+        }
+        footer{
+            margin: 0 auto;
+            width: 1200px;
+            height: 300px;
+            background-color: #3b8686;
+            font-size: 100px;
+        }
+        
+        /*-----------------------------*/
+           .sub {
+      padding: 0;
+      margin: 0;
+        float: left;
+               width: 150px;
+    }
+
+    .sub>li {
+      list-style-type: none;
+      text-align: center;
+    }
+
+    .sub>li>a {
+      height: 50px;
+      line-height: 50px;
+      width:100%;
+      display: block;
+    }
+
+    .sub-rwap{
+        position: absolute;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="#"><img src="logo.png"></a></div>
+        <div class="menu">
+            <ul>
+                <li class="menu1"><a href="#">도서관 안내</a>
+                    
+                </li>
+                <li class="menu1"><a href="#">자료 정보-검색</a>
+                     
+                </li>
+                <li class="menu1"><a href="#">이용자 서비스</a>
+                    
+                </li>
+                <li class="menu1"><a href="#">열린공간</a>
+                   
+                </li>
+                <li class="menu1"><a href="#">나의 도서관</a>
+                   
+                </li>
+            </ul>
+        </div>
+        <div>
+            <a href="#">로그인</a>
+            <a href="#">회원가입</a>
+        </div>
+        
+        
+              <div class="sub-wrap">
+        <div class="col-md-2">
+        </div>
+        <div class="sub-menu col-md-8">
+          <ul class="sub">
+            <li><a href="#">오시는 길</a></li>
+          </ul>
+          <ul class="sub">
+            <li><a href="#">새로운 책</a></li>
+            <li><a href="#">대출 베스트</a></li>
+          </ul>
+          <ul class="sub">
+            <li><a href="#">상호대차</a></li>
+
+          </ul>
+          <ul class="sub">
+            <li><a href="#">공지사항</a></li>
+            <li><a href="#">일정</a></li>
+          </ul>
+          <ul class="sub">
+            <li><a href="#">내 서재</a></li>
+            <li><a href="#">마이페이지</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+      </div>
+      </div>  
+    </header>
+    <div class="content">
+        <div class="imgMain"><img class="mainImg" src="main2.jpg">
+            <div>
+                <input type="text" placeholder="검색어를 입력하세요.">
+                <input type="image" src="search.webp" alt="submit" name="Submit" value="Submit"  align="absmiddle">
+            </div>
+        </div>
+        <div class="content2">
+            <div>달력</div>
+            <div>공지</div>
+        </div>
+        <br>
+        <div class="book">
+            <ul class="navi">
+                <li class="tab" onclick="selectTab(0);">새로운 책</li>
+                <li class="tab" onclick="selectTab(1);">대출 순위</li>
+            </ul>
+            <div class="contents">
+               <div class="bookContent">
+                <ul>
+                   <li><a href="#">책1
+                   
+                   </a></li>
+                   
+                   <li><a href="#">책1</a></li>
+                   <li><a href="#">책1</a></li>
+                   <li><a href="#">책1</a></li>
+                   <li><a href="#">책1</a></li>
+               </ul>
+                </div>
+                <div class="bookContent">
+               <ul>
+                   <li><a href="#">책2</a></li>
+                   <li><a href="#">책2</a></li>
+                   <li><a href="#">책2</a></li>
+                   <li><a href="#">책2</a></li>
+                   <li><a href="#">책2</a></li>
+               </ul>
+               </div>
+            </div>
+         </div>
+    </div>
+    <br>
+    <footer>footer
+    </footer>
+    <script>
+        window.onload=function(){
+            selectTab(0);
+        }
+        function selectTab(idx){
+            var tabs = document.getElementsByClassName("tab");
+            var content = document.getElementsByClassName("bookContent");
+            for(var i=0; i<tabs.length;i++){
+                tabs[i].style.color="lightgray";
+            }
+            for(var i=0; i<content.length;i++){
+                content[i].style.display="none";
+            }
+            tabs[idx].style.color="black";
+            tabs[idx].style.fontSize="bold";
+            content[idx].style.display="block";
+        }
+    
+    </script>
+</body>
+</html>

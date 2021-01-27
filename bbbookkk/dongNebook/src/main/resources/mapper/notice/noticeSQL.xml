@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- @author 진수경 -->
+<mapper namespace="notice">
+	<select id="selectNoticeList" parameterType="map" resultType="notice">
+		select 
+			rnum as rNum,
+			notice_no as noticeNo,
+			notice_writer as noticeWriter,
+			notice_title as noticeTitle,
+			notice_content as noticeContent,
+			enroll_date as enrollDate
+		from (select rownum as rnum, n.* 
+				from(select * from notice order by 1 desc)n) 
+		where rnum between #{start} and #{end}
+	</select>
+	<select id="selectNotice" parameterType="_int" resultType="notice">
+		select * from notice where notice_no=#{_int}
+	</select>
+	<select id="selectTotalCount" resultType="_int">
+		select count(*) from notice
+	</select>
+	<delete id="deleteNotice" parameterType="_int">
+		delete
+			from notice
+		where notice_no = #{_int}
+	</delete>
+	<insert id="insertNotice" parameterType="notice">
+		insert into notice values(notice_seq.nextval, #{noticeWriter}, #{noticeTitle}, #{noticeContent}, sysdate)
+	</insert>
+	<select id="selectNoticeNo" resultType="_int">
+		select max(notice_no) from notice
+	</select>
+	<insert id="insertFile">
+		insert into "FILE" values(file_seq.nextval, #{tableNo}, #{tableName}, #{filename}, #{filepath})
+	</insert>
+	<select id="selectFile" resultType="fileVO">
+		select * from "FILE" where table_name='notice' and table_no=#{_int}
+	</select>
+	<update id="updateNotice">
+		update notice set notice_title=#{noticeTitle}, notice_content=#{noticeContent} where notice_no=#{noticeNo}
+	</update>
+	<delete id="deleteFile">
+		delete from "FILE" where table_name='notice' and table_no=#{_int}
+	</delete>
+	<delete id="deleteFilepath" parameterType="map">
+		delete from "FILE" where table_name='notice' and table_no=#{tableNo}
+		and filepath in
+		<foreach collection="delFileList" open="(" separator="," close=")" item="filepath">
+		#{filepath}
+		</foreach>
+	</delete>
+	<select id="selectFileNum" parameterType="_int" resultType="_int">
+		select count(*) from "FILE" where table_no=#{_parameter}
+	</select>
+</mapper>

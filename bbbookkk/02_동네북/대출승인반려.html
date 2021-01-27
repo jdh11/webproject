@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+     <style>
+         body{
+             width: 100%;
+         }
+         table{
+             margin: 0 auto;
+             margin-top: 50px;
+             border-top: 3px solid lightgray;
+             border-bottom: 3px solid lightgray;
+         }
+         table>tbody>tr{
+             text-align: center;
+         }
+         table>tbody>tr>td{
+            border-bottom: 1px solid lightgray; 
+         }
+         table>tbody>tr:last-child>td{
+            border-bottom: none;
+         }
+ 	table>tbody>tr:first-child>td:nth-child(2){
+        
+ 		width : 500px;
+        height: 50px;
+        font-size: 18px;
+        font-weight: bold;
+ 	}
+         table>tbody>tr:first-child>td:nth-child(3){
+ 		width : 100px;
+        height: 50px;
+        font-size: 18px;
+        font-weight: bold;
+ 	}
+          table>tbody>tr:first-child>td:nth-child(4){
+ 		width : 100px;
+        height: 50px;
+        font-size: 18px;
+        font-weight: bold;
+ 	}
+         table>tbody>tr>td:first-child{
+             width: 50px;
+         }
+         table>tbody>tr>td{
+             height: 35px;
+         }
+         [type=button]{
+             width: 90px;
+             height: 40px;
+             font-size: 20px;
+         }
+         .button{
+             margin-top: 30px;
+             text-align: center;
+         }
+ </style>
+</head>
+
+<body>
+    <h1>도서 승인/반려</h1>
+    <table>
+        <tr>
+            <td><input type="checkbox" name = "chk" id="allChk"></td>
+            <td>제목</td>
+            <td>저자</td>
+            <td>신청자</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name = "chk" class="chk"></td>
+            <td>제목1</td>
+            <td>저자1</td>
+            <td>신청자</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name = "chk" class="chk"></td>
+            <td>제목2</td>
+            <td>저자2</td>
+            <td>신청자</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name = "chk" class="chk"></td>
+            <td>제목3</td>
+            <td>저자3</td>
+            <td>신청자</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name = "chk" class="chk"></td>
+            <td>제목4</td>
+            <td>저자4</td>
+            <td>신청자</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name = "chk" class="chk"></td>
+            <td>제목5</td>
+            <td>저자5</td>
+            <td>신청자</td>
+        </tr>
+    </table>
+    <div class="button">
+   <input type="button" class="insertBtn" value="승인">
+   <input type="button" class="deleteBtn" value="반려">
+   </div>
+    <script>
+        $(".insertBtn").click(function() {
+            var inputs = $(".chk:checked");
+            var bookList = new Array();
+            inputs.each(function(idx, item) {
+                   bookList.push()
+            
+            });
+            var book = bookName.join("/");
+            var writer = bookWriter.join("/");
+        });
+
+
+
+        $(document).ready(function() {
+            
+            $(".chk").click(function(){
+                 var chk = $(".chk").length;
+            var chkCount = $(".chk:checked").length;
+                if(chk == chkCount){
+                   $("#allChk").prop("checked",true);
+                }else{
+                $("#allChk").prop("checked",false); 
+                }
+            });
+           $("#allChk").click(function(){
+            //만약 전체 선택 체크박스가 체크된상태일경우
+            if($("#allChk").prop("checked")) {
+                $("input[type=checkbox]").prop("checked",true);
+                //input type이 체크박스인것은 모두 체크함
+            } else {
+                $("input[type=checkbox]").prop("checked",false);
+                //input type이 체크박스인것은 모두 체크 해제함
+            };
+            });
+        });
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<%@page import="com.dongnebook.proposal.model.vo.ProposalVO"%>
+<%@page import="com.dongnebook.book.model.vo.Book"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+ <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+</head>
+<body>
+<h1>도서 승인/반려</h1>
+    <table border=1>
+    <tr>
+        <td><input type="checkbox" id="allChk"></td>
+        <td>제목</td>
+        <td>저자</td>
+        <td>신청자</td>
+    </tr>
+    <c:forEach items="${list }" var="b" varStatus="status">
+    <tr>
+        <td><input type="checkbox" class="chk"></td>
+        <td>${b.bookName }</td>
+        
+        <input type="hidden" value="${b.bookKind }">
+        <input type="hidden" value="${b.bookPublisher }">
+        <input type="hidden" value="${b.bookIntroduce }">
+        <input type="hidden" value="${b.imageurl }">
+        <td>${b.bookWriter }</td>
+        <td>${userList.get(status.index).userName }</td>
+    </tr>
+    </c:forEach>
+        </table>
+        <input type="button" class="insertBtn" value="승인">
+        <input type="button" value="반려" class="btn" onclick="deleteProposal();">
+   		
+   		<div id="pageNavi">${pageNavi }</div>
+    <script>
+    $(".insertBtn").click(function() {
+        var inputs = $(".chk:checked");
+        var allList = new Array();
+        //idx는 순서 내가 체크한 순서
+        $(".chk:checked").each(function(idx, item){
+        	var book = new Array();
+        	console.log(idx);
+        	
+        	var bookName = $(item).parent().next().html();
+        	var bookKind = $(item).parent().next().next().val();
+        	var bookPublisher = $(item).parent().next().next().next().val();
+        	var bookIntroduce = $(item).parent().next().next().next().next().val();
+        	var imageurl = $(item).parent().next().next().next().next().next().next().val();
+        	var bookWriter = $(item).parent().parent().find("td").eq(2).html();
+        	
+        	book = [
+        		bookName,
+        		bookKind,
+        		bookPublisher,
+        		bookIntroduce,
+        		imageurl,
+        		bookWriter
+        	];
+        	console.log(book);
+        	allList.push(book);
+        	console.log(allList);
+        	
+        })
+        var list = JSON.stringify(allList);
+        
+    });
+       $(document).ready(function(){
+           $('#allChk').click(function(){ $("input[type=checkbox]").prop('checked',this.checked);
+                });
+       })
+    </script>
+</body>
+</html>

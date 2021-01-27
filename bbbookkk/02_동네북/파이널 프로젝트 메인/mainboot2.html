@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+
+<style>
+    body{
+        margin: 0;
+    }
+    header{
+         padding: 0 30px 30px;
+            background: linear-gradient(to right, #f2f2f2, #f2f2f2 50%, #105c4d 50%, #105c4d ); 
+    }
+    .logo{
+        width: 210px;
+        position: absolute;
+        left: 30px;
+        top: 0;
+        background: #f2f2f2;
+        z-index: 30;
+    }
+    .logo>a{
+        display: block;
+        height: 50px;
+    }
+    .logo>a>img{
+        width: 100%;
+    }
+    ul{
+        padding: 0;
+    }
+    li{
+        text-align: center;
+        list-style-type: none;
+    }
+    a{
+        text-decoration: none;
+    }
+    header .visual img{
+        width: 100%;
+        
+        
+    }
+    header>ul{
+        display: flex;
+        position: absolute;
+        top: 0;
+        right: 30px;
+        background: #105c4d;
+            padding: 0;
+            z-index: 30;
+            margin: 0;
+        width: 210px;
+    }
+    header>ul li{
+            flex: 1;
+            line-height: 30px;
+            list-style-type: none;
+        text-align: center;
+        }
+        header>ul li a {
+            display: inline-block;
+            width: 80px;
+            height: 50px;
+            vertical-align: middle;
+            line-height: 30px;
+            text-decoration: none;
+            color: #f2f2f2;
+            font-size: 18px;
+            font-family: 'Noto Sans KR';
+        }
+    .nav>ul{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        height: 50px;
+        
+    }
+    .nav>ul>li{
+        border-bottom: 1px solid #f2f2f2;
+       
+    }
+    
+    .navbar_toogleBtn{
+            display: none;
+            position: absolute;
+            right: 32px;
+            font-size: 24px;
+            color: black;
+        }
+    header #lnb{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-sizing: border-box;
+        z-index: 30;
+    }
+    header #lnb nav > ul{
+        margin: 0;
+    }
+    header #lnb nav > ul> li> a{
+            font-family: 'Noto Sans KR';
+            font-size: 18px;
+            color: #f2f2f2;
+            text-decoration: none;
+            width: 150px;
+            height: 50px;
+            display: block;
+            line-height: 50px;
+            position: relative;
+        }
+    header #lnb nav > ul> li> a:after{
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0px;
+            width: 0%;
+            height: 2px;
+            background: #105c4d;
+            transition: all 0.5s;
+        
+        }
+    header #lnb nav > ul> li:hover> a:after{
+            width: 100%;
+            left: 0;
+       
+        }
+         header #lnb nav:hover ul{
+            opacity: 1;
+        }
+        
+        header #lnb nav >ul li{
+            list-style-type: none;
+            
+        }
+         header #lnb nav >ul ul li{
+           line-height: 39px;
+             
+        }
+    header #lnb nav:hover ul{
+            opacity: 1;
+        }
+     .sub{
+        position: relative;
+         padding-top: 10px;
+         text-align: center;
+        width: 100%;
+        opacity: 0;
+        transition: all 0.5s;
+         box-sizing: border-box;
+    }
+    .sub>li>a{
+        display: block;
+        position: relative;
+        width: 130px;
+        font-size: 18px;
+        font-family: 'Noto Sans KR';
+        height: 40px;
+        line-height: 40px;
+        color: #105c4d;
+    }
+        .sub li a:after{
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -1px;
+            width: 0%;
+            height: 2px;
+            background: #105c4d;
+            transition: all 0.5s;
+             
+        }
+       .sub li a:hover:after{
+            width: 130px;
+            left: 0;
+        }
+    
+    
+        .wrap {
+            display: none;
+      width: 97%;
+      height: 300px;
+      background-color: #f2f2f2;
+      z-index: 0;
+      position: absolute;
+      top: 0;
+            margin: 0px;
+            padding: 0px;
+    }
+    /*--------------header---------------------------*/
+    
+    
+    
+     .search{
+            position: absolute;
+            width: 60%;
+            top: 50%;
+	        left: 33%;
+            overflow: hidden;
+        }
+        .search>input:first-child{
+            float: left;
+            width: 50%;
+            height: 40px;
+            outline: none;
+            background-color: rgb(255, 255, 255);
+            border: none;
+            font-size: 20px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+        .search>input:last-child{
+            height: 42px;
+            width: 45px;
+            vertical-align:top;
+            background-color: rgb(255, 255, 255);
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        [name=Submit]{
+            outline: none;
+        }
+    /*------------search----------------------*/
+    
+    
+     @media screen and (max-width:768px){
+            header{
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 8px 24px;
+                background: none;
+            }
+         .logo{
+             background: none;
+         }
+         .visual>img{
+             display: none;
+         }
+            .nav{
+                position: absolute;
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                top: 150px;
+            }
+             .nav ul{
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                 
+            }
+            .nav ul il{
+                width: 100%;
+                text-align: center;
+                
+            }
+             .log{
+                display: none;
+                 
+                justify-content: center;
+                width: 100%;
+            }
+             .navbar_toogleBtn{
+                display: block;
+            }
+            .nav.active,
+            .log.actice{
+                display: block;
+            }
+            .sub{
+                display: none;
+            }
+          .navbar_toogleBtn{
+                display: block;
+            }
+         .search{
+             display: none;
+         }
+    }
+    
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="#"><img src="logo.png" alt="logo"></a></div>
+        <div id="lnb">
+        <nav class="nav">
+            <ul>
+                <li>
+                   <a href="#">도서관 안내</a>
+                   <ul class="sub">
+                      <li><a href="#">오시는 길</a></li>
+                   </ul>
+                </li>
+                <li>
+                    <a href="#">자료정보-검색</a>
+                    <ul class="sub">
+                        <li><a href="#">새로운 책</a></li>
+                        <li><a href="#">대출 베스트</a></li>
+                    </ul> 
+                </li>
+                <li>
+                     <a href="#">이용자 서비스</a>
+                     <ul class="sub">
+                        <li><a href="#">상호대차</a></li>
+                     </ul> 
+                </li>
+                <li>
+                    <a href="#">열린공간</a>
+                    <ul class="sub">
+                        <li><a href="#">공지사항</a></li>
+                        <li><a href="#">일정</a></li>
+                     </ul>
+                    </li>
+                <li>
+                    <a href="#">나의 도서관</a>
+                    <ul class="sub">
+                        <li><a href="#">내 서재</a></li>
+                        <li><a href="#">마이페이지</a></li>
+                     </ul>
+                </li>
+            </ul>
+        </nav>
+        
+        </div>
+        <div class="wrap"></div>
+        <ul class="log">
+            <li><a href="#">로그인</a></li>
+            <li><a href="#">회원가입</a></li>
+        </ul>
+        <a href="#" class="navbar_toogleBtn">11
+            <i class="fas fa-bars"></i>
+        </a>
+        <div class="visual"><img src="mainImg.jpg"></div>
+        <div class="search">
+                <input type="text" placeholder="검색어를 입력하세요.">
+                <input type="image" src="search.webp" alt="submit" name="Submit" value="Submit"  align="absmiddle">
+            </div>
+    
+    
+    </header>
+        <script>
+            
+            $(function() {
+            $(".nav").mouseover(function() {
+                $(".nav > ul> li> a").css('color','#105c4d');
+                $(".wrap").slideDown();
+                $(".sub").slideDown();
+                $(".log").css('backgroundColor','#f2f2f2');
+                $(".log>li>a").css('color','#105c4d');
+                $(".nav>ul>li").css('border-bottom','1px solid #105c4d');
+            });
+            $(".nav").mouseleave(function() {
+                 $(".nav > ul> li> a").css('color','#f2f2f2');
+               $(".wrap").slideUp();
+                 $(".sub").slideUp();
+                $(".log").css('backgroundColor','#105c4d');
+                $(".log>li>a").css('color','#f2f2f2');
+                $(".nav>ul>li").css('border-bottom','1px solid #f2f2f2');
+                
+            });
+            $(".nav>ul>li>ul").mouseover(function(event) {
+                return false;
+            });
+            }); 
+        
+    var toogleBtn= document.querySelector('.navbar_toogleBtn');
+        var menu = document.querySelector('.nav');
+        var log= document.querySelector('.log');
+            var sub=document.querySelector('.sub');
+        
+        toogleBtn.addEventListener('click',()=>{
+            
+            menu.classList.toggle('active');
+            log.classList.toggle('active');
+            sub.classList.hide();
+        })
+    
+    </script>
+</body>
+</html>

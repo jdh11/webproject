@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pro">
+	<select id="proposalList" parameterType="hashMap" resultType="pro">
+		select 
+			user_no as userNo,
+			user_name as userName,
+			book_name as bookName,
+			book_kind as bookKind,
+			book_writer as bookWriter,
+			book_publisher as bookPublisher,
+			book_introduce as bookIntroduce,
+			isbn,
+			imageurl,
+			reason,
+			isproposal
+		from (select rownum as pNum, p.* from (select * from book_proposal left join "USER" using (user_no)
+	
+	<choose>
+		<when test="selectType == 0">
+		order by isproposal nulls first, book_proposal_no asc )p) where pNum between ${start} and ${end}
+		
+		</when>
+		<when test="selectType == 1">
+		where isproposal is null order by isproposal nulls first, book_proposal_no asc )p) where pNum between ${start} and ${end}
+		
+		</when>
+		
+		<when test="selectType == 2">
+		where isproposal = 'y' order by isproposal nulls first, book_proposal_no desc )p) where pNum between ${start} and ${end}
+		
+		</when>
+		
+		<when test="selectType == 3">
+		where isproposal = 'n' order by isproposal nulls first, book_proposal_no desc )p) where pNum between ${start} and ${end}
+		
+		</when>
+	
+	
+	</choose>
+	
+	</select>
+	<select id="totalCount" parameterType="_int" resultType="_int">
+		select count(*) from book_proposal 
+		
+		<choose>
+		<when test = "value == 0">
+		
+		</when>
+		
+		<when test="value == 1">
+		where isproposal is null
+		</when>
+		
+		<when test="value == 2">
+		where isproposal = 'y'
+		</when>
+		
+		<when test="value == 3">
+		where isproposal = 'n'
+		</when>
+		
+		</choose>
+	</select>
+	
+	<insert id="inserBook" parameterType="book">
+		insert into Book values(
+			book_seq.nextval,
+			#{bookName},
+			#{bookKind},
+			#{bookWriter},
+			#{bookPublisher},
+			#{bookIntroduce},
+			#{ISBN},
+			#{bookCount},
+			#{rCount},
+			#{imageurl}
+		)
+	</insert>
+	<update id="updateProposal" parameterType="book">
+		update book_proposal set isproposal = 'y' where isbn = #{ISBN}
+	</update>
+	<update id="nProposalBook" parameterType="book">
+		update book_proposal set isproposal = 'n' where isbn = #{ISBN}
+	</update>
+	
+	<insert id="insertProposal" parameterType="pro">
+		insert into book_proposal values(
+			book_proposal_seq.nextval,
+			#{userNo},
+			#{bookName},
+			#{bookKind},
+			#{bookWriter},
+			#{bookPublisher},
+			#{bookIntroduce},
+			#{ISBN},
+			#{imageurl},
+			'보고싶어서',
+			null
+		)
+	</insert>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+		<setting name="mapUnderscoreToCamelCase" value="true"/> 
+	</settings>
+	<typeAliases>
+		<typeAlias type="com.dongnebook.user.model.vo.User" alias="user"/>
+		<typeAlias type="com.dongnebook.category.model.vo.Category" alias="category"/>
+		<typeAlias type="com.dongnebook.notice.model.vo.Notice" alias="notice"/>
+		<typeAlias type="com.dongnebook.book.model.vo.Book" alias="book"/>
+		<typeAlias type="com.dongnebook.bookmark.model.vo.Bookmark" alias="bookmark"/>
+		<typeAlias type="com.dongnebook.rental.model.vo.RentalLoc" alias="loc"/>
+		<typeAlias type="com.dongnebook.rental.model.vo.BookRental" alias="rental"/>
+		<typeAlias type="com.dongnebook.rental.model.vo.BookRentalReserve" alias="reserve"/>
+		<typeAlias type="com.dongnebook.proposal.model.vo.ProposalVO" alias="pro"/>
+		<typeAlias type="com.dongnebook.common.FileVO" alias="fileVO"/>
+		<typeAlias type="com.dongnebook.calendar.model.vo.Calendar" alias="calendar"/>
+		<typeAlias type="com.dongnebook.admin.model.vo.Admin" alias="admin"/>
+		<typeAlias type="com.dongnebook.rental.model.vo.BookRental" alias="bookrental"/>
+		<typeAlias type="com.dongnebook.rental.model.vo.Rental" alias="rentalJ"/>
+		<typeAlias type="com.dongnebook.alert.model.vo.Alert" alias="alert"/>
+		<typeAlias type="com.dongnebook.review.model.vo.Review" alias="review"/>
+		<typeAlias type="com.dongnebook.review_co_comment.model.vo.ReviewCoComment" alias="review_co_comment"/>
+		<typeAlias type="com.dongnebook.review_comment.model.vo.ReviewComment" alias="review_comment"/>
+		<typeAlias type="com.dongnebook.tag.model.vo.Tag" alias="tag"/>
+		<typeAlias type="com.dongnebook.report.model.vo.Report" alias="report"/>
+		<typeAlias type="com.dongnebook.chat.model.vo.ChatUser" alias="cUser"/>
+		<typeAlias type="com.dongnebook.proposalAlert.model.vo.ProposalAlert" alias="pa"/>
+	</typeAliases>
+</configuration>

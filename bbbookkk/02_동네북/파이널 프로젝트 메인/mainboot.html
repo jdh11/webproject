@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+   <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    <style>
+        body{
+            margin: 0;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        li{
+            list-style-type: none;
+        }
+        .navbar{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            
+        }
+        .logo{
+            width: 250px;
+        }
+        .logo>img{
+            width: 100%;
+        }
+        .navbar_menu>ul{
+            display: flex;
+            padding-left:0;
+        }
+        .navbar_menu>ul>li{
+            padding: 8px 12px;
+        }
+        .navbar_menu>ul>li>a{
+            font-size: 20px;
+            font-family: 'Noto Sans KR';
+        }
+        .navbar-icons ul{
+            display: flex;
+            padding-left: 0;
+        }
+        .navbar-icons>ul>li{
+            padding: 8px 12px;
+        }
+        .navbar_tooleBtn{
+            display: none;
+            position: absolute;
+            right: 32px;
+            font-size: 24px;
+            color: black;
+        }
+        .sub-menu{
+             display: flex;
+            position: absolute;
+            top: 50px;
+            width: 100%;
+            justify-content: center;
+            display: none;
+        }
+        .sub-menu>ul{
+            padding: 0;
+        }
+        .sub-menu>ul>li{
+            text-align: center;
+        }
+        .sub-menu>ul>li>a{
+            
+            display: inline-block;
+            width: 120px;
+            height: 50px;
+            line-height: 50px;
+        }
+        @media screen and (max-width:768px){
+            .navbar{
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 8px 24px;
+            }
+            .navbar_menu{
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+             .navbar_menu ul{
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+            .navbar_menu ul il{
+                width: 100%;
+                text-align: center;
+            }
+             .navbar-icons ul{
+                 display: none;
+                justify-content: center;
+                width: 100%;
+            }
+            .navbar_tooleBtn{
+                display: block;
+            }
+            .navbar_menu.active,
+            .navber_icons.actice{
+                display: block;
+            }
+            .sub-menu{
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+        <header>
+       <div class="navbar">
+        <div class="logo"><img src="logo.png"></div>
+        <div class="navbar_menu">
+            <ul>
+                <li>
+                   <a href="#">도서관 안내</a>
+                  
+                </li>
+                <li>
+                    <a href="#">자료정보-검색</a>
+                    
+                </li>
+                <li>
+                     <a href="#">이용자 서비스</a>
+                     
+                     </li>
+                <li>
+                    <a href="#">열린공간</a>
+                    
+                    </li>
+                <li>
+                    <a href="#">나의 도서관</a>
+                   
+                     </li>
+            </ul>
+            <div class="subback">
+                
+                
+            </div>
+        </div>
+        <div class="navbar-icons">
+           <ul>
+                <li><a href="#">로그인</a></li>
+                <li><a href="#">회원가입</a></li>
+            </ul>
+        </div>
+        <a href="#" class="navbar_tooleBtn">11
+            <i class="fas fa-bars"></i>
+        </a>
+        </div>
+        <div class="sub-menu">
+            <ul class="sub">
+                <li><a href="#">오시는 길</a></li>
+            </ul>
+            <ul class="sub">
+                <li><a href="#">새로운 책</a></li>
+                <li><a href="#">대출 베스트</a></li>
+            </ul> 
+           <ul class="sub">
+                        <li><a href="#">상호대차</a></li>
+                        
+                     </ul> 
+                     <ul class="sub">
+                        <li><a href="#">공지사항</a></li>
+                        <li><a href="#">일정</a></li>
+                     </ul>
+                      <ul class="sub">
+                        <li><a href="#">내 서재</a></li>
+                        <li><a href="#">마이페이지</a></li>
+                     </ul>
+        </div>
+    </header>
+    <script>
+    var toogleBtn= document.querySelector('.navbar_tooleBtn');
+        var menu = document.querySelector('.navbar_menu');
+        var icons= document.querySelector('.navbar_icons');
+        
+        toogleBtn.addEventListener('click',()=>{
+            menu.classList.toggle('active');
+            icons.classList.toggle('active');
+        })
+    
+    </script>
+     <script>
+        $(function() {
+            $(".navar_menu").mouseover(function() {
+                $(".wrap").slideDown();
+                $(".sub-menu").slideDown();
+            });
+            $(".navar_menu").mouseleave(function() {
+               $(".wrap").slideUp();
+                 $(".sub-menu").slideUp();
+                
+            });
+            $(".nav>ul>li>ul").mouseover(function(event) {
+                return false;
+            });
+            });
+    </script>
+</body>
+</html>
